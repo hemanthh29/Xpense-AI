@@ -1,0 +1,10 @@
+html{
+    scroll-behavior:smooth;
+}
+.Nav-Logo{
+    height:40px;
+    outline:none !important;
+}
+.navbar-color{
+    background-color:#3E8177;
+}
