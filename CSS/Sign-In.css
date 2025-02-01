@@ -1,0 +1,47 @@
+.Background-Container{
+background-color:#1e1f20;
+height:100vh;
+}
+.Card-Container{
+    background-color:#0e0e0e;
+    border-radius:12px;
+}
+.Nav-Logo{
+    height:40px;
+}
+.Card-Heading{
+    font-family:"Roboto";
+    font-weight:normal;
+    color:#ffffff;
+    font-size:36px;
+}
+.Card-Paragraph{
+    font-family:"Roboto";
+    font-weight:normal;
+    color:#ffffff;
+    font-size:16px;
+}
+.form-label{
+    color:#b5b6b6;
+}
+.form-control{
+    background-color:#0e0e0e;
+    color:#b5b6b6;
+}
+.form-control:focus {
+    color: #b5b6b6;
+    background-color: #0e0e0e;
+    box-shadow:none;
+}
+.form-text{
+    color:#787c7e;
+}
+.form-check-label{
+    color:#787c7e;
+}
+.form-check-input{
+    box-shadow:none !important;
+}
+.btn{
+    border-radius: 16px;
+}

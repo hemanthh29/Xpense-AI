@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Xpense AI - Sign In</title>
+    <!--Bootstrap CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../CSS/Sign-In.css">
+    <!--Popper JS-->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <!--Bootstrap JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <!--Google Roboto-->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="Background-Container d-flex flex-row justify-content-center align-items-center">
+        <div class="Card-Container p-4 p-md-5 d-flex flex-row justify-content-center align-items-center">
+            <div class="container">
+                <div class="row">
+                    <div class = "col-12 col-md-6">
+                        <img src="https://res.cloudinary.com/doxjkpn5a/image/upload/v1738346555/pixelcut-export_q1vdhy.png"
+                            class="Nav-Logo" />
+                        <br />
+                        <br />
+                        <h1 class="Card-Heading">
+                            Sign In
+                        </h1>
+                        <p class="Card-Paragraph">
+                            with your Google account, or use your email and password to access your account.
+                        </p>
+                    </div>
+                    <div class = "col-12 col-md-6">
+                        <form>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1">
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="togglePassword()">
+                                <label class="form-check-label" for="exampleCheck1">Show Password</label>
+                            </div>
+                            <div class = "d-flex flex-row justify-content-between">
+                                <a href = "#" class = "form-text">Forgotten your password?</a>
+                            <button type="submit" class="btn btn-primary">Sign In</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../JS/Script.js"></script>
+</body>
+
+</html>
