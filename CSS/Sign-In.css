@@ -6,6 +6,21 @@ height:100vh;
     background-color:#0e0e0e;
     border-radius:12px;
 }
+@media (pointer: coarse) {
+    .Card-Container{
+        border-radius:0;
+    }
+    .Background-Container{
+        background-color:#1e1f20;
+        height:100%;
+        }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+    .Card-Container {
+        border-radius: 0;
+        height:100vh;
+    }
+}
 .Nav-Logo{
     height:40px;
 }

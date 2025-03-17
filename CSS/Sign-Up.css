@@ -1,0 +1,36 @@
+.Background-Container {
+    background-color: #1e1f20;
+    min-height:100vh;
+}
+
+.Card-Container {
+    background-color: #0e0e0e;
+    border-radius: 12px;
+}
+@media (pointer: coarse) {
+    .Card-Container {
+        border-radius: 0;
+    }
+    .Background-Container {
+        height:100%;
+    }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+    .Card-Container {
+        border-radius: 0;
+        height:100vh;
+    }
+}
+#alertContainer {
+    position: fixed;
+    top: 20px; /* Adjust to ensure it appears right below the top bar */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050; /* Ensures it appears above other content */
+    width: 90%;
+    max-width: 500px; /* Limits width for readability */
+    text-align: center;
+}
+
+
+
