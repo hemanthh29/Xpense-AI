@@ -7,13 +7,13 @@ height:100vh;
     border-radius:12px;
 }
 @media (pointer: coarse) {
-    .Card-Container{
-        border-radius:0;
+    .Card-Container {
+        border-radius: 0;
+        height:100vh;
     }
-    .Background-Container{
-        background-color:#1e1f20;
+    .Background-Container {
         height:100%;
-        }
+    }
 }
 @media (min-width: 768px) and (max-width: 1023px) {
     .Card-Container {

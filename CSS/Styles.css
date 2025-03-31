@@ -1,14 +1,17 @@
-html{
-    scroll-behavior:smooth;
+html {
+    scroll-behavior: smooth;
 }
-.Nav-Logo{
-    height:40px;
-    outline:none !important;
+
+.Nav-Logo {
+    height: 40px;
+    outline: none !important;
 }
-.Background-Container{
-    background-color:#000000;
-    height:100vh;
+
+.Background-Container {
+    background-color: #000000;
+    height: 100vh;
 }
-.Modal-Header-Bg{
-    background-color:#3E8177;
+
+.Modal-Header-Bg {
+    background-color: #3E8177;
 }

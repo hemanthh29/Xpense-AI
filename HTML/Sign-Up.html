@@ -24,25 +24,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/4bac6d041c.js" crossorigin="anonymous"></script>
+    <!-- Zxcvbn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
+
 </head>
 
 <body>
     <div id="alertContainer" class="position-fixed top-0 start-50 translate-middle-x mt-3 text-center"
-    style="z-index: 1050; width: 80%; max-width: 500px; display: none;">
-    <div id="successAlert" class="alert alert-success alert-dismissible fade d-none" role="alert">
-        <strong>Success!</strong> <span id="successMessage"></span>
+        style="z-index: 1050; width: 80%; max-width: 500px; display: none;">
+        <div id="successAlert" class="alert alert-success alert-dismissible fade d-none" role="alert">
+            <strong>Success!</strong> <span id="successMessage"></span>
+        </div>
+        <div id="errorAlert" class="alert alert-danger alert-dismissible fade d-none" role="alert">
+            <strong>Error!</strong> <span id="errorMessage"></span>
+        </div>
     </div>
-    <div id="errorAlert" class="alert alert-danger alert-dismissible fade d-none" role="alert">
-        <strong>Error!</strong> <span id="errorMessage"></span>
-    </div>
-</div>
 
     <div class="Background-Container d-flex flex-row justify-content-center align-items-center">
         <div class="Card-Container p-4 p-md-5 d-flex flex-row justify-content-center align-items-center">
             <div class="container">
                 <div class="row">
                     <div class="col-12 text-left mb-3">
-                        <a href="Index.html"><i class="fa-solid fa-arrow-left-long text-light"></i></a>
+                        <a href="../Index.html"><i class="fa-solid fa-arrow-left-long text-light"></i></a>
                     </div>
                     <div class="col-12 col-md-6">
                         <img src="https://res.cloudinary.com/doxjkpn5a/image/upload/v1738346555/pixelcut-export_q1vdhy.png"
@@ -66,20 +69,33 @@
                             </div>
                             <div class="mb-3">
                                 <label for="SignUpEmail" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="SignUpEmail" placeholder="Enter your Email" required>
+                                <input type="email" class="form-control" id="SignUpEmail" placeholder="Enter your Email"
+                                    required>
                             </div>
                             <div class="mb-3">
                                 <label for="SignUpPassword" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="SignUpPassword"
                                     placeholder="Enter your new password" required>
+
+                                <!-- Strength Text (Initially Hidden) -->
+                                <small id="passwordStrengthText" class="form-text d-none"></small>
+
+                                <!-- Strength Progress Bar (Initially Hidden) -->
+                                <div id="passwordStrengthContainer" class="progress mt-1 d-none">
+                                    <div id="passwordStrengthBar" class="progress-bar" role="progressbar"
+                                        style="width: 0%;" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
                             </div>
+
+
                             <div class="mb-3">
                                 <label for="SignUpConfirmPassword" class="form-label">Confirm Password</label>
                                 <input type="password" class="form-control" id="SignUpConfirmPassword"
                                     placeholder="Re-enter your password" required>
                             </div>
                             <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="ShowSignUpPassword" onclick="toggleSignUpPassword()">
+                                <input type="checkbox" class="form-check-input" id="ShowSignUpPassword"
+                                    onclick="toggleSignUpPassword()">
                                 <label class="form-check-label" for="ShowSignUpPassword">Show Password</label>
                             </div>
                             <button type="submit" id="create-account" class="btn btn-primary w-100">
@@ -92,6 +108,7 @@
         </div>
     </div>
 
+    <script src="../JS/Script-Main.js"></script>
     <script type="module" src="../JS/Script.js"></script>
     <script type="module" src="../JS/SignUp.js"></script>
     <script type="module" src="../JS/Authentication.js"></script>

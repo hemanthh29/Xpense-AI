@@ -1,28 +1,3 @@
-// Function to toggle the password visibility for Sign-In form
-function toggleLoginPassword() {
-    let LoginPassword = document.getElementById('LoginPassword');
-
-    if (LoginPassword.type === 'password') {
-        LoginPassword.type = 'text';
-    } else {
-        LoginPassword.type = 'password';
-    }
-}
-
-// Function to toggle password visibility for the Sign-Up form
-function toggleSignUpPassword() {
-    let passwordField = document.getElementById('SignUpPassword');
-    let confirmPasswordField = document.getElementById('SignUpConfirmPassword');
-
-    if (passwordField.type === 'password') {
-        passwordField.type = 'text';
-        confirmPasswordField.type = 'text';
-    } else {
-        passwordField.type = 'password';
-        confirmPasswordField.type = 'password';
-    }
-}
-
 export function showAlert(type, message) {
     const alertContainer = document.getElementById("alertContainer");
 
@@ -49,5 +24,19 @@ export function showAlert(type, message) {
     }, 5000);
 }
 
+// ✅ Show alert immediately if redirected
+document.addEventListener("DOMContentLoaded", () => {
+    const alertType = localStorage.getItem("alertType");
+    const alertMessage = localStorage.getItem("alertMessage");
+
+    if (alertType && alertMessage) {
+        showAlert(alertType, alertMessage); // ✅ Directly call showAlert()
+
+        // Remove stored alert so it doesn't appear again
+        localStorage.removeItem("alertType");
+        localStorage.removeItem("alertMessage");
+    }
+});
+  
 
 
