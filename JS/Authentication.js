@@ -1,60 +1,73 @@
 import { app, auth } from './FireBase-Config.js';
-import { 
-  getAuth, 
-  createUserWithEmailAndPassword, 
-  signInWithPopup, 
-  GoogleAuthProvider, 
-  updateProfile, 
-  sendEmailVerification, 
-  signInWithEmailAndPassword, 
-  onAuthStateChanged, 
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  updateProfile,
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
   signOut
 } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js';
-import { showAlert } from './Script.js'; // ✅ Import alert function
-// Define an array of protected page names
-const protectedPages = ["Home.html"];
 
-// Get the current page name from the URL
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  serverTimestamp
+} from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js';
+
+import { showAlert } from './Script.js'; // ✅ Import alert function
+
+const db = getFirestore(app);
+
+// ✅ Create user in Firestore
+const createUserInFirestore = async (user, name = "") => {
+  const userRef = doc(db, "users", user.uid);
+
+  await setDoc(userRef, {
+    uid: user.uid,
+    name: name || user.displayName || "",
+    email: user.email,
+    provider: user.providerData[0].providerId,
+    profilePic: user.photoURL || "",
+    createdAt: serverTimestamp()
+  });
+
+  console.log("✅ User added to Firestore");
+};
+
+// ✅ Protected route auth check
+const protectedPages = ["Dashboard.html"];
 const currentPage = window.location.pathname.split("/").pop();
 
-// If the current page is protected, perform the auth check
 if (protectedPages.includes(currentPage)) {
   onAuthStateChanged(auth, (user) => {
-    console.log("User Status:", user);
     if (!user || !user.emailVerified) {
-      console.log(`🚫 No verified user detected on ${currentPage}. Redirecting to login...`);
-
-      // 🔹 Store the alert type and message before redirecting
       localStorage.setItem("alertType", "error");
       localStorage.setItem("alertMessage", "🔒 Please sign in to access this page.");
-
       window.location.href = "Sign-In.html";
-    } else {
-      console.log("✅ User is authenticated:", user.email);
     }
   });
 }
 
-
-/** 🔹 Show Loading Spinner Inside Button **/
+// ✅ Show loading spinner
 function showLoading(button) {
   if (!button) return;
-  
   button.dataset.originalText = button.innerHTML;
   button.innerHTML = `<span class="spinner-grow spinner-grow-sm"></span> Processing...`;
   button.disabled = true;
 }
 
-/** 🔹 Restore Button After Loading **/
+// ✅ Restore button
 function hideLoading(button) {
   if (!button) return;
-  
   button.innerHTML = button.dataset.originalText || "Submit";
   button.disabled = false;
 }
 
-/** 🔹 Sign-Up with Email & Password **/
-/** 🔹 Sign-Up with Email & Password (Only Add Verified Users) **/
+// ✅ Sign up with email/password
 export const signUpWithEmailPassword = (email, password, name, button) => {
   const auth = getAuth(app);
   showLoading(button);
@@ -63,18 +76,13 @@ export const signUpWithEmailPassword = (email, password, name, button) => {
     .then(async (userCredential) => {
       const user = userCredential.user;
 
-      // ✅ Send verification email
+      await updateProfile(user, { displayName: name });
       await sendEmailVerification(user);
-
-      // ✅ Immediately log out the user so they can't access without verification
+      await createUserInFirestore(user, name); // ✅ Save user to Firestore
       await signOut(auth);
 
-      showAlert("success", "✅ Account created! A verification link has been sent to your email.");
-
-      // 🔹 Clear form fields
+      showAlert("success", "✅ Account created! Verification email sent.");
       document.getElementById("SignUpForm").reset();
-
-      // 🔥 Schedule deletion of unverified users (Optional)
       checkAndDeleteUnverifiedUser(user);
     })
     .catch((error) => {
@@ -93,8 +101,7 @@ export const signUpWithEmailPassword = (email, password, name, button) => {
     .finally(() => hideLoading(button));
 };
 
-
-/** 🔹 Google Sign-Up **/
+// ✅ Google Sign-In
 export const signUpWithGoogle = async (button) => {
   const provider = new GoogleAuthProvider();
   showLoading(button);
@@ -103,13 +110,15 @@ export const signUpWithGoogle = async (button) => {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
+    await createUserInFirestore(user); // ✅ Save user to Firestore
+
     if (!user.emailVerified) {
       await sendEmailVerification(user);
-      showAlert("success", "✅ Google sign-in successful! Please verify your email before signing in.");
+      showAlert("success", "✅ Google sign-in successful! Please verify your email.");
     } else {
       showAlert("success", "✅ Google sign-in successful! Redirecting...");
       setTimeout(() => {
-        window.location.href = "Home.html";
+        window.location.href = "Dashboard.html";
       }, 2000);
     }
   } catch (error) {
@@ -119,6 +128,7 @@ export const signUpWithGoogle = async (button) => {
   }
 };
 
+// ✅ Email sign-in
 export const signInWithEmailPassword = (email, password, button) => {
   const auth = getAuth(app);
   showLoading(button);
@@ -128,14 +138,14 @@ export const signInWithEmailPassword = (email, password, button) => {
       const user = userCredential.user;
 
       if (!user.emailVerified) {
-        showAlert("error", "❌ Your email is not verified. Please check your inbox.");
-        signOut(auth); // 🔹 Immediately log them out
+        showAlert("error", "❌ Your email is not verified.");
+        signOut(auth);
         return;
       }
 
       showAlert("success", "✅ Login successful! Redirecting...");
       setTimeout(() => {
-        window.location.href = "Home.html";
+        window.location.href = "Dashboard.html";
       }, 2000);
     })
     .catch((error) => {
@@ -144,11 +154,8 @@ export const signInWithEmailPassword = (email, password, button) => {
     .finally(() => hideLoading(button));
 };
 
-
-
-/** 🔹 Logout Function **/
+// ✅ Logout
 export const logoutUser = () => {
-  const auth = getAuth(app);
   signOut(auth)
     .then(() => {
       showAlert("success", "✅ Successfully logged out!");
@@ -161,15 +168,13 @@ export const logoutUser = () => {
     });
 };
 
-/** 🔹 Delete Unverified Users After Some Time **/
+// ✅ Delete unverified users after 24h
 function checkAndDeleteUnverifiedUser(user) {
   setTimeout(async () => {
-    const auth = getAuth(app);
-    await user.reload(); // Refresh user data
-
+    await user.reload();
     if (!user.emailVerified) {
       await user.delete();
       console.log(`🔥 Unverified user ${user.email} deleted from Firebase.`);
     }
-  }, 86400000); // 24 hours in milliseconds
+  }, 86400000); // 24h
 }
