@@ -1,0 +1,45 @@
+.custom-dropdown {
+  margin-left: -290px;
+  min-width: 340px !important;
+  width: auto !important;
+  border-radius:12px;
+}
+
+@media (pointer: coarse) {
+  .custom-dropdown {
+    margin-left: 0;
+  }
+}
+
+.Profile-Container {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.Profile-Container::after {
+  display: none !important;
+  content: none !important;
+}
+
+.User-Logo {
+  height: 150%;
+  object-fit: cover;
+}
+
+.Card-Button {
+  border-style: none;
+  border-radius: 12px;
+  width: 100%;
+}
+.Custom-OffCanvas{
+  border-top-left-radius:12px;
+  border-top-right-radius:12px;
+  height:53%;
+}
+.Default-Card{
+  border-style:solid;
+  border-radius:12px;
+  border-width:1px;
+}

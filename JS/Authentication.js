@@ -168,6 +168,16 @@ export const logoutUser = () => {
     });
 };
 
+document.addEventListener("DOMContentLoaded", () => {
+  const logoutBtn = document.getElementById("Logout-Button");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      logoutUser();
+    });
+  }
+});
+
 // ✅ Delete unverified users after 24h
 function checkAndDeleteUnverifiedUser(user) {
   setTimeout(async () => {
