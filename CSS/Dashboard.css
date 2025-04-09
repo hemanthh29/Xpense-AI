@@ -43,3 +43,28 @@
   border-radius:12px;
   border-width:1px;
 }
+.Profile-Image{
+  width: 40px; 
+  height: 36px; 
+  object-fit: cover; 
+  display: none;
+}
+/* Default: desktop/tablet - hide text */
+.MyProfileText {
+  display: none;
+}
+
+/* On coarse pointers (touch devices) */
+@media (pointer: coarse) {
+  #navProfileImage,
+  #navProfileIcon {
+    display: none !important;
+  }
+
+  .MyProfileText {
+    display: inline !important;
+  }
+}
+.Account-Card{
+  border-radius:12px;
+}

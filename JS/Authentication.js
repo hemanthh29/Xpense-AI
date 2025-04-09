@@ -43,14 +43,23 @@ const protectedPages = ["Dashboard.html"];
 const currentPage = window.location.pathname.split("/").pop();
 
 if (protectedPages.includes(currentPage)) {
+  const isLoggingOut = localStorage.getItem("isLoggingOut");
+
   onAuthStateChanged(auth, (user) => {
     if (!user || !user.emailVerified) {
+      if (isLoggingOut) {
+        // Clear flag and do nothing
+        localStorage.removeItem("isLoggingOut");
+        return;
+      }
+
       localStorage.setItem("alertType", "error");
       localStorage.setItem("alertMessage", "🔒 Please sign in to access this page.");
       window.location.href = "Sign-In.html";
     }
   });
 }
+
 
 // ✅ Show loading spinner
 function showLoading(button) {
@@ -155,16 +164,18 @@ export const signInWithEmailPassword = (email, password, button) => {
 };
 
 // ✅ Logout
-export const logoutUser = () => {
+const logoutUser = () => {
   signOut(auth)
     .then(() => {
-      showAlert("success", "✅ Successfully logged out!");
-      setTimeout(() => {
-        window.location.href = "Sign-In.html";
-      }, 1500);
+      // Store alert for Sign-In page
+      localStorage.setItem("alertType", "success");
+      localStorage.setItem("alertMessage", "✅ Successfully logged out!");
+
+      // Redirect after storing
+      window.location.href = "Sign-In.html";
     })
     .catch((error) => {
-      showAlert("error", error.message);
+      showAlert("error", error.message); // This can stay because error is on the current page
     });
 };
 
@@ -178,6 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+
 // ✅ Delete unverified users after 24h
 function checkAndDeleteUnverifiedUser(user) {
   setTimeout(async () => {
@@ -188,3 +200,16 @@ function checkAndDeleteUnverifiedUser(user) {
     }
   }, 86400000); // 24h
 }
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("🔐 Logged in user:");
+    console.log("UID:", user.uid);
+    console.log("Email:", user.email);
+    console.log("Name:", user.displayName);
+    console.log("Email Verified:", user.emailVerified);
+    console.log("Provider:", user.providerId);
+  } else {
+    console.log("🚫 No user is logged in.");
+  }
+});

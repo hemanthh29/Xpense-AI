@@ -23,6 +23,15 @@
 </head>
 
 <body>
+  <div id="alertContainer" class="position-fixed top-0 start-50 translate-middle-x mt-3 text-center"
+    style="z-index: 1050; width: 80%; max-width: 500px; display: none;">
+    <div id="successAlert" class="alert alert-success alert-dismissible fade d-none" role="alert">
+      <strong>Success!</strong> <span id="successMessage"></span>
+    </div>
+    <div id="errorAlert" class="alert alert-danger alert-dismissible fade d-none" role="alert">
+      <strong>Error!</strong> <span id="errorMessage"></span>
+    </div>
+  </div>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
@@ -37,26 +46,39 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" href="#">Dashboard</a>
+            <a class="nav-link active" href="#"><button class="btn btn-secondary">Dashboard</button></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Add Transaction</a>
+            <a class="nav-link" href="#"><button class="btn btn-secondary">Add Transaction</button></a>
           </li>
-          <!-- ✅ Dropdown working properly now -->
+
+          <!-- ✅ Profile Dropdown -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle Profile-Container d-flex align-items-center justify-content-center"
               href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-regular fa-user"></i>
+              <!--Profile Image -->
+              <img id="navProfileImage" src="" class="rounded-circle Profile-Image mt-3" />
+              <!--Default Icon -->
+              <span id="navProfileIcon" class="User-Nav-Icon">
+                <i class="fa-regular fa-user mt-3"></i>
+              </span>
+              <span class="MyProfileText ms-2">My Profile</span>
             </a>
             <ul class="dropdown-menu custom-dropdown" aria-labelledby="navbarDropdown">
               <li>
-                <a class="dropdown-item d-flex" href="#">
+                <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="me-2">
-                    <i class="fa-regular fa-user"></i>
+                    <!--Profile Image -->
+                    <img id="dropdownProfileImage" src="" class="rounded-circle Profile-Image me-2" />
+                    <!--Default Icon -->
+                    <span id="dropdownProfileIcon" class="User-Nav-Icon">
+                      <i class="fa-regular fa-user me-2"></i>
+                    </span>
+
                   </div>
                   <div>
-                    <p class="Profile-Details mb-0">John Doe</p>
-                    <p class="Profile-Details mb-0">xyz@gmail.com</p>
+                    <p class="Profile-Details mb-0" id="navUserName">John Doe</p>
+                    <p class="Profile-Details mb-0" id="navUserEmail">xyz@gmail.com</p>
                   </div>
                 </a>
               </li>
@@ -67,7 +89,8 @@
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#" id="Logout-Button"><i class="fa-solid fa-arrow-right-from-bracket me-1 ms-1"></i> Logout</a></li>
+              <li><a class="dropdown-item" href="#" id="Logout-Button"><i
+                    class="fa-solid fa-arrow-right-from-bracket me-1 ms-1"></i> Logout</a></li>
             </ul>
           </li>
         </ul>
@@ -84,79 +107,61 @@
           </h1>
         </div>
       </div>
-      <div class="col-4 mt-3">
-        <button class="Card-Button p-5 shadow" type="button" data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-          <div class="col-12">
-            <i class="fa-solid fa-plus fa-2x"></i>
-          </div>
-          <div class="col-12 mt-2">Add New Account</div>
-        </button>
-      </div>
-      <div class="col-4 mt-3">
-        <button class="Card-Button p-5 shadow">
-          <div class="col-12">
-            <i class="fa-solid fa-plus fa-2x"></i>
-          </div>
-          <div class="col-12 mt-2">Add New Account</div>
-        </button>
-      </div>
-      <div class="col-4 mt-3">
-        <button class="Card-Button p-5 shadow">
-          <div class="col-12">
-            <i class="fa-solid fa-plus fa-2x"></i>
-          </div>
-          <div class="col-12 mt-2">Add New Account</div>
-        </button>
-      </div>
+    </div>
+    <div class="row" id="accountRowContainer">
     </div>
   </div>
-
   <!--OffCanvas-->
-  <div class="offcanvas offcanvas-bottom Custom-OffCanvas" tabindex="-1" id="offcanvasBottom"
-    aria-labelledby="offcanvasBottomLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasBottomLabel">Create New Account</h5>
-    </div>
-    <div class="offcanvas-body small">
-      <div class="mb-3">
-        <label for="formGroupExampleInput" class="form-label">Account Name</label>
-        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Please Enter Your Account Name">
+  <form id="accountForm" class="needs-validation" novalidate>
+    <div class="offcanvas offcanvas-bottom Custom-OffCanvas" tabindex="-1" id="offcanvasBottom"
+      aria-labelledby="offcanvasBottomLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasBottomLabel">Create New Account</h5>
       </div>
-      <div class="mb-3">
-        <label for="exampleSelect" class="form-label">Account Type</label>
-        <select class="form-select" id="exampleSelect" aria-label="Default select example">
-          <option selected>Select</option>
-          <option value="1">Savings</option>
-          <option value="2">Current</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="formGroupExampleInput3" class="form-label">Initial Balance</label>
-        <input type="text" class="form-control" id="formGroupExampleInput3"
-          placeholder="Please Enter Your Initial Balance">
-      </div>
-      <div class="Default-Card p-2">
-        <div class = "d-flex flex-row justify-content-between align-items-center">
-          <div>
-            <p class="Default-Card-Text mb-0">Set as Default</p>
-          </div>
-          <div>
-            <div class="form-check form-switch">
-              <input class="form-check-input Custom-Switch" type="checkbox" id="flexSwitchCheckDefault">
+      <div class="offcanvas-body small">
+        <div class="mb-3">
+          <label for="formGroupExampleInput" class="form-label">Account Name</label>
+          <input type="text" class="form-control" id="formGroupExampleInput" required
+            placeholder="Please Enter Your Account Name">
+          <div class="invalid-feedback">Please enter account name</div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleSelect" class="form-label">Account Type</label>
+          <select class="form-select" id="exampleSelect" required>
+            <option value="">Select</option>
+            <option value="Savings">Savings</option>
+            <option value="Current">Current</option>
+          </select>
+          <div class="invalid-feedback">Please select account type</div>
+        </div>
+        <div class="mb-3">
+          <label for="formGroupExampleInput3" class="form-label">Initial Balance</label>
+          <input type="number" class="form-control" id="formGroupExampleInput3" required
+            placeholder="Please Enter Your Initial Balance">
+          <div class="invalid-feedback">Please enter a valid amount</div>
+        </div>
+        <div class="Default-Card p-2">
+          <div class="d-flex flex-row justify-content-between align-items-center">
+            <div>
+              <p class="Default-Card-Text mb-0">Set as Default</p>
+            </div>
+            <div>
+              <div class="form-check form-switch">
+                <input class="form-check-input Custom-Switch" type="checkbox" id="flexSwitchCheckDefault">
+              </div>
             </div>
           </div>
+          <p class="Default-Card-Info">This account will be selected by default for transactions</p>
         </div>
-        <p class = "Default-Card-Info">This account will be selected by default for transactions
-        </p>
-      </div>
-      <div class = "d-flex flex-row mt-3">
-        <button class = "btn btn-secondary" type="button" data-bs-dismiss="offcanvas" aria-label="Close">Cancel</button>
-        <button class = "btn btn-secondary ms-3" type="button">Create Account</button>
+        <div class="d-flex flex-row mt-3">
+          <button class="btn btn-secondary" type="button" data-bs-dismiss="offcanvas" aria-label="Close">Cancel</button>
+          <button class="btn btn-secondary ms-3" type="submit" id="createAccountBtn">Create Account</button>
+        </div>
       </div>
     </div>
-  </div>
+  </form>
   <script type="module" src="../JS/Authentication.js"></script>
+  <script type="module" src="../JS/Dashboard.js"></script>
 </body>
 
 

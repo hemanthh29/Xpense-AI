@@ -37,6 +37,3 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.removeItem("alertMessage");
     }
 });
-  
-
-
