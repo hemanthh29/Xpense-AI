@@ -69,3 +69,4 @@ node_modules/
 .dataconnect
 .firebaserc
 firebase.json
+functions/.eslintrc.js
