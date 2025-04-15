@@ -70,3 +70,5 @@ node_modules/
 .firebaserc
 firebase.json
 functions/.eslintrc.js
+functions/package-lock.json
+functions/package.json
