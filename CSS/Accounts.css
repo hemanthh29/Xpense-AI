@@ -1,0 +1,29 @@
+.Custom-Table {
+    border: 1px solid #dee2e6; /* Outer border */
+  }
+  
+  .Custom-Table td,
+  .Custom-Table th,
+  .Custom-Table thead {
+    border-bottom: 1px solid #dee2e6 !important; /* Row borders */
+  }
+  .text-purple {
+    color: #a855f7 !important;
+}
+.border-purple {
+    border-color: #a855f7 !important;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.table td, .table th {
+    vertical-align: middle;
+}
+.badge {
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+  
+  

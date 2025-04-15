@@ -68,3 +68,19 @@
 .Account-Card{
   border-radius:12px;
 }
+.Background-Container{
+  background-color:#F0F2F5;
+}
+.Account-Card-Heading{
+  font-family:"Roboto",sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+}
+.Account-Balance{
+  font-family:"Roboto",sans-serif;
+  font-size: 22px;
+  font-weight: bold;
+  color: #000000;
+}
+

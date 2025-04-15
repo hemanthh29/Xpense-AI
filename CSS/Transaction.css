@@ -1,0 +1,14 @@
+.Reccuring-Container {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ced4da;
+    border-radius: 12px;
+}
+
+body {
+    scroll-behavior: smooth;
+
+    overflow-y: scroll;
+}
+
+

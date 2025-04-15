@@ -10,6 +10,7 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="../CSS/Styles.css">
   <link rel="stylesheet" href="../CSS/Dashboard.css">
+  <link rel="stylesheet" href="../CSS/Transaction.css">
   <!--Popper JS-->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
     integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
@@ -46,12 +47,8 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" href="#"><button class="btn btn-secondary">Dashboard</button></a>
+            <a class="nav-link active" href="Dashboard.html"><button class="btn btn-secondary">Dashboard</button></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><button class="btn btn-secondary">Add Transaction</button></a>
-          </li>
-
           <!--Profile Dropdown -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle Profile-Container d-flex align-items-center justify-content-center"
@@ -85,7 +82,8 @@
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>Manage Account</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>Manage
+                  Account</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
@@ -97,74 +95,99 @@
       </div>
     </div>
   </nav>
-  <div class = "Background-Container">
-    <div class="fluid-container p-5">
-      <div class="row">
-        <div class="col-12">
-          <div class="Dashboard-Container">
-            <h1 class="Dashboard-Heading">
-              Dashboard
-            </h1>
-          </div>
-        </div>
+  <div class="container p-5">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="Transaction-Heading">
+          Add Transaction
+        </h1>
       </div>
-      <div class="row" id="accountRowContainer">
-      </div>
-    </div>
-    <!--OffCanvas-->
-    <form id="accountForm" class="needs-validation" novalidate>
-      <div class="offcanvas offcanvas-bottom Custom-OffCanvas" tabindex="-1" id="offcanvasBottom"
-        aria-labelledby="offcanvasBottomLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasBottomLabel">Create New Account</h5>
-        </div>
-        <div class="offcanvas-body small">
+      <div class="col-12 mt-5">
+        <form id="transactionForm" class="needs-validation" novalidate>
           <div class="mb-3">
-            <label for="formGroupExampleInput" class="form-label">Account Name</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" required
-              placeholder="Please Enter Your Account Name">
-            <div class="invalid-feedback">Please enter account name</div>
-          </div>
-          <div class="mb-3">
-            <label for="exampleSelect" class="form-label">Account Type</label>
-            <select class="form-select" id="exampleSelect" required>
-              <option value="">Select</option>
-              <option value="Savings Account">Savings</option>
-              <option value="Current Account">Current</option>
+            <label for="Expense-Type" class="form-label">Type</label>
+            <select class="form-select mb-3" aria-label="Expense-Type" id="Expense-Type" required>
+              <option selected value="">Select Expense Type</option>
+              <option value="1">Income</option>
+              <option value="2">Expense</option>
             </select>
-            <div class="invalid-feedback">Please select account type</div>
+            <div class="invalid-feedback">Please select a valid type</div>
           </div>
+
+          <div class="row">
+            <div class="mb-3 col-md-6">
+              <label for="Transaction-Amount" class="form-label">Amount</label>
+              <input type="number" class="form-control" id="Transaction-Amount" required
+                placeholder="Please Enter the transaction amount" min="0" step="1" />
+              <div class="invalid-feedback">Please enter a valid amount</div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+              <label for="Account" class="form-label">Account</label>
+              <select class="form-select" disabled aria-label="Account" id="Account">
+                <option selected value=""></option>
+              </select>
+            </div>
+          </div>
+
           <div class="mb-3">
-            <label for="formGroupExampleInput3" class="form-label">Initial Balance</label>
-            <input type="number" class="form-control" id="formGroupExampleInput3" required
-              placeholder="Please Enter Your Initial Balance">
-            <div class="invalid-feedback">Please enter a valid amount</div>
+            <label for="Category" class="form-label">Category</label>
+            <select class="form-select mb-3" aria-label="Category" id="Category" required>
+              <option selected disabled value="">Select Category</option>
+            </select>
+            <div class="invalid-feedback">Please select a valid category</div>
           </div>
-          <div class="Default-Card p-2">
-            <div class="d-flex flex-row justify-content-between align-items-center">
+
+          <div class="mb-3">
+            <label for="transactionDate" class="form-label">Date</label>
+            <input type="date" class="form-control" id="transactionDate" required min="2000-01-01" />
+            <div class="invalid-feedback">Please choose a valid date</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="Description" class="form-label">Description</label>
+            <input type="text" class="form-control" id="Description" placeholder="Enter Description" required />
+          </div>
+
+          <div class="mb-3 mt-4">
+            <div class="Reccuring-Container d-flex flex-row justify-content-between p-3 pb-0">
               <div>
-                <p class="Default-Card-Text mb-0">Set as Default</p>
+                <p class="Reccuring-Text">Recurring Transaction</p>
+                <p class="Reccuring-Info">Set up a recurring schedule for this transaction</p>
               </div>
-              <div>
-                <div class="form-check form-switch">
-                  <input class="form-check-input Custom-Switch" type="checkbox" id="flexSwitchCheckDefault">
-                </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input Custom-Switch" type="checkbox" id="flexSwitchCheckDefault">
               </div>
             </div>
-            <p class="Default-Card-Info">This account will be selected by default for transactions</p>
           </div>
-          <div class="d-flex flex-row mt-3">
-            <button class="btn btn-secondary" type="button" data-bs-dismiss="offcanvas"
-              aria-label="Close">Cancel</button>
-            <button class="btn btn-secondary ms-3" type="submit" id="createAccountBtn">Create Account</button>
+
+          <div class="mb-3" id="Recurring-Interval-Container" style="display: none;">
+            <label for="Recurring-Interval" class="form-label">Recurring Interval</label>
+            <select class="form-select mb-3" aria-label="Recurring-Interval" id="Recurring-Interval">
+              <option selected disabled value="">Select Interval</option>
+              <option value="1">Daily</option>
+              <option value="2">Weekly</option>
+              <option value="3">Monthly</option>
+              <option value="4">Yearly</option>
+            </select>
+            <div class="invalid-feedback">Please select a valid interval</div>
           </div>
-        </div>
+
+          <div class="row">
+            <div class="col-6">
+              <button id="cancelBtn" class="btn btn-light w-100" type="button">Cancel</button>
+            </div>
+            <div class = "col-6">
+              <button type="submit" class="btn btn-secondary w-100" id="Add-Transaction-Button">
+                <span class="btn-text">Add</span>
+                <span class="spinner-grow spinner-grow-sm ms-2 d-none" role="status" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
+  <script type="module" src="../JS/Transaction.js"></script>
   <script type="module" src="../JS/Authentication.js"></script>
-  <script type="module" src="../JS/Dashboard.js"></script>
 </body>
-
-
-</html>

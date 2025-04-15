@@ -18,11 +18,11 @@ import {
   serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js';
 
-import { showAlert } from './Script.js'; // ✅ Import alert function
+import { showAlert } from './Script.js';
 
 const db = getFirestore(app);
 
-// ✅ Create user in Firestore
+//Create user in Firestore
 const createUserInFirestore = async (user, name = "") => {
   const userRef = doc(db, "users", user.uid);
 
@@ -38,7 +38,7 @@ const createUserInFirestore = async (user, name = "") => {
   console.log("✅ User added to Firestore");
 };
 
-// ✅ Protected route auth check
+//Protected route auth check
 const protectedPages = ["Dashboard.html"];
 const currentPage = window.location.pathname.split("/").pop();
 
@@ -48,7 +48,6 @@ if (protectedPages.includes(currentPage)) {
   onAuthStateChanged(auth, (user) => {
     if (!user || !user.emailVerified) {
       if (isLoggingOut) {
-        // Clear flag and do nothing
         localStorage.removeItem("isLoggingOut");
         return;
       }
@@ -61,7 +60,7 @@ if (protectedPages.includes(currentPage)) {
 }
 
 
-// ✅ Show loading spinner
+//Show loading spinner
 function showLoading(button) {
   if (!button) return;
   button.dataset.originalText = button.innerHTML;
@@ -69,14 +68,14 @@ function showLoading(button) {
   button.disabled = true;
 }
 
-// ✅ Restore button
+//Restore button
 function hideLoading(button) {
   if (!button) return;
   button.innerHTML = button.dataset.originalText || "Submit";
   button.disabled = false;
 }
 
-// ✅ Sign up with email/password
+//Sign up with email/password
 export const signUpWithEmailPassword = (email, password, name, button) => {
   const auth = getAuth(app);
   showLoading(button);
@@ -87,10 +86,10 @@ export const signUpWithEmailPassword = (email, password, name, button) => {
 
       await updateProfile(user, { displayName: name });
       await sendEmailVerification(user);
-      await createUserInFirestore(user, name); // ✅ Save user to Firestore
+      await createUserInFirestore(user, name); //Save user to Firestore
       await signOut(auth);
 
-      showAlert("success", "✅ Account created! Verification email sent.");
+      showAlert("success", "Account created! Verification email sent.");
       document.getElementById("SignUpForm").reset();
       checkAndDeleteUnverifiedUser(user);
     })
@@ -98,11 +97,11 @@ export const signUpWithEmailPassword = (email, password, name, button) => {
       let errorMessage = "Something went wrong. Please try again.";
 
       if (error.code === "auth/email-already-in-use") {
-        errorMessage = "⚠️ This email is already registered. Try logging in.";
+        errorMessage = "This email is already registered. Try logging in.";
       } else if (error.code === "auth/weak-password") {
-        errorMessage = "🔒 Password is too weak. Use at least 6 characters.";
+        errorMessage = "Password is too weak. Use at least 6 characters.";
       } else if (error.code === "auth/invalid-email") {
-        errorMessage = "❌ Invalid email format.";
+        errorMessage = "Invalid email format.";
       }
 
       showAlert("error", errorMessage);
@@ -110,7 +109,7 @@ export const signUpWithEmailPassword = (email, password, name, button) => {
     .finally(() => hideLoading(button));
 };
 
-// ✅ Google Sign-In
+//Google Sign-In
 export const signUpWithGoogle = async (button) => {
   const provider = new GoogleAuthProvider();
   showLoading(button);
@@ -119,13 +118,13 @@ export const signUpWithGoogle = async (button) => {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
-    await createUserInFirestore(user); // ✅ Save user to Firestore
+    await createUserInFirestore(user); //Save user to Firestore
 
     if (!user.emailVerified) {
       await sendEmailVerification(user);
-      showAlert("success", "✅ Google sign-in successful! Please verify your email.");
+      showAlert("success", "Google sign-in successful! Please verify your email.");
     } else {
-      showAlert("success", "✅ Google sign-in successful! Redirecting...");
+      showAlert("success", "Google sign-in successful! Redirecting...");
       setTimeout(() => {
         window.location.href = "Dashboard.html";
       }, 2000);
@@ -137,7 +136,7 @@ export const signUpWithGoogle = async (button) => {
   }
 };
 
-// ✅ Email sign-in
+//Email sign-in
 export const signInWithEmailPassword = (email, password, button) => {
   const auth = getAuth(app);
   showLoading(button);
@@ -147,12 +146,12 @@ export const signInWithEmailPassword = (email, password, button) => {
       const user = userCredential.user;
 
       if (!user.emailVerified) {
-        showAlert("error", "❌ Your email is not verified.");
+        showAlert("error", "Your email is not verified.");
         signOut(auth);
         return;
       }
 
-      showAlert("success", "✅ Login successful! Redirecting...");
+      showAlert("success", "Login successful! Redirecting...");
       setTimeout(() => {
         window.location.href = "Dashboard.html";
       }, 2000);
@@ -163,19 +162,19 @@ export const signInWithEmailPassword = (email, password, button) => {
     .finally(() => hideLoading(button));
 };
 
-// ✅ Logout
+//Logout
 const logoutUser = () => {
   signOut(auth)
     .then(() => {
       // Store alert for Sign-In page
       localStorage.setItem("alertType", "success");
-      localStorage.setItem("alertMessage", "✅ Successfully logged out!");
+      localStorage.setItem("alertMessage", "Successfully logged out!");
 
       // Redirect after storing
       window.location.href = "Sign-In.html";
     })
     .catch((error) => {
-      showAlert("error", error.message); // This can stay because error is on the current page
+      showAlert("error", error.message);
     });
 };
 
@@ -190,26 +189,26 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// ✅ Delete unverified users after 24h
+//Delete unverified users after 24h
 function checkAndDeleteUnverifiedUser(user) {
   setTimeout(async () => {
     await user.reload();
     if (!user.emailVerified) {
       await user.delete();
-      console.log(`🔥 Unverified user ${user.email} deleted from Firebase.`);
+      console.log(`Unverified user ${user.email} deleted from Firebase.`);
     }
   }, 86400000); // 24h
 }
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log("🔐 Logged in user:");
+    console.log("Logged in user:");
     console.log("UID:", user.uid);
     console.log("Email:", user.email);
     console.log("Name:", user.displayName);
     console.log("Email Verified:", user.emailVerified);
     console.log("Provider:", user.providerId);
   } else {
-    console.log("🚫 No user is logged in.");
+    console.log("No user is logged in.");
   }
 });
